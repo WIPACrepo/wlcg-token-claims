@@ -32,7 +32,7 @@ class BaseHandler(RestHandler):
             else:
                 logger.info('invalid authorization!')
         # Auth Failed
-        except Exception as e:
+        except Exception:
             if self.debug and 'Authorization' in self.request.headers:
                 logger.info('Authorization: %r', self.request.headers['Authorization'])
 
