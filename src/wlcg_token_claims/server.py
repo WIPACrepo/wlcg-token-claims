@@ -65,11 +65,13 @@ class Auth(BaseHandler):
                     if self.validate(username=username, scope=s):
                         potential_scopes.append(s)
                 scopes = ' '.join(potential_scopes)
+                logging.debug('valid scopes: %s', scopes)
             else:
                 # default case
                 scopes = f'storage.read:/data/user/{username} storage.modify:/data/user/{username}'
         except Exception:
             logging.info('failed to get scopes', exc_info=True)
+            raise HTTPError(400, 'invalid scopes')
 
         self.write({
             'scopes': scopes,
@@ -90,7 +92,7 @@ class Health(BaseHandler):
 
 class Server:
     def __init__(self):
-        if not ENV.CI_TEST and not ENV.AUTH_SECRET:
+        if not ENV.AUTH_SECRET:
             raise RuntimeError('Must define an AUTH_SECRET')
 
         handler_config = {

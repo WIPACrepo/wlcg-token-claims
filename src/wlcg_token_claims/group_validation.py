@@ -19,8 +19,8 @@ def get_user_info(username):
 
 
 class Validator:
-    def __init__(self, base_path: Path):
-        self._base_path = base_path if base_path else Path('/')
+    def __init__(self, base_path: str):
+        self._base_path = Path(base_path if base_path else '/')
         self._path_cache = {}
 
     def __call__(self, username='', scope='') -> bool:
