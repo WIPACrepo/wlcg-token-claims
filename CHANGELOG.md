@@ -2,6 +2,13 @@
 
 
 
+## v0.0.2 (2025-05-09)
+
+###  
+
+* fix env and path issue ([`b55d607`](https://github.com/WIPACrepo/wlcg-token-claims/commit/b55d6075c1107ffa26b478d518c9413ced4086c8))
+
+
 ## v0.0.1 (2025-05-08)
 
 ###  
