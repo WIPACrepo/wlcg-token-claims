@@ -2,6 +2,13 @@
 
 
 
+## v0.0.5 (2025-05-30)
+
+###  
+
+* fix if conditions ([`d6050c5`](https://github.com/WIPACrepo/wlcg-token-claims/commit/d6050c55e5445c50f70a12f7ea701cbecc8916f7))
+
+
 ## v0.0.4 (2025-05-30)
 
 ###  
