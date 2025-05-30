@@ -2,6 +2,13 @@
 
 
 
+## v0.0.9 (2025-05-30)
+
+###  
+
+* need to add quotes to strings for annotations ([`a94471e`](https://github.com/WIPACrepo/wlcg-token-claims/commit/a94471e8949e48a16b636c1485b414d3eada669e))
+
+
 ## v0.0.8 (2025-05-30)
 
 ###  
