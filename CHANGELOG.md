@@ -2,6 +2,13 @@
 
 
 
+## v0.0.14 (2025-05-30)
+
+###  
+
+* apparently no one on the internet can get annotations with spaces to work, so give up ([`f5d9910`](https://github.com/WIPACrepo/wlcg-token-claims/commit/f5d991018f387c76312c21bf92f19ca6f03a0752))
+
+
 ## v0.0.13 (2025-05-30)
 
 ###  
