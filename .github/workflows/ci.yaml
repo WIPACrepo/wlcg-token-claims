@@ -180,8 +180,8 @@ jobs:
         with:
           context: .
           platforms: ${{ matrix.platform }}
-          build-args:
-          - SETUPTOOLS_SCM_PRETEND_VERSION=${{ needs.release.outputs.tag }}
+          build-args: |
+            SETUPTOOLS_SCM_PRETEND_VERSION=${{ needs.release.outputs.tag }}
           tags: ${{ env.REGISTRY_IMAGE }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
