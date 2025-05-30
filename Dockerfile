@@ -2,6 +2,8 @@ FROM python:3.13
 
 RUN groupadd -g 1000 app && useradd -m -g 1000 -u 1000 app
 
+RUN mkdir /mnt/data
+
 RUN mkdir /app
 WORKDIR /app
 
