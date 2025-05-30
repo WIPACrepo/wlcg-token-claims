@@ -82,11 +82,10 @@ class Health(BaseHandler):
     async def get(self):
         ret = {}
         try:
-            self.auth.provider_info['authorization_endpoint']
-            ret['openid_info'] = True
+            self.validate.base_path.exists()
         except Exception:
             self.set_status(500)
-            ret['openid_info'] = False
+            ret['base_path'] = False
         self.write(ret)
 
 
