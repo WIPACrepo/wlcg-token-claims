@@ -16,7 +16,14 @@ jobs:
   flake8:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # Note: we need to checkout the repository at the workflow sha in case during the workflow
+      # the branch was updated. To keep PSR working with the configured release branches,
+      # we force a checkout of the desired release branch but at the workflow sha HEAD.
+      - name: Setup | Checkout Repository at workflow sha
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
       - uses: astral-sh/ruff-action@v3
 
   py-versions:
@@ -24,7 +31,14 @@ jobs:
     outputs:
       matrix: ${{ steps.versions.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
+      # Note: we need to checkout the repository at the workflow sha in case during the workflow
+      # the branch was updated. To keep PSR working with the configured release branches,
+      # we force a checkout of the desired release branch but at the workflow sha HEAD.
+      - name: Setup | Checkout Repository at workflow sha
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
       - id: versions
         uses: WIPACrepo/wipac-dev-py-versions-action@v2.5
 
@@ -37,7 +51,14 @@ jobs:
       matrix:
         version: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      # Note: we need to checkout the repository at the workflow sha in case during the workflow
+      # the branch was updated. To keep PSR working with the configured release branches,
+      # we force a checkout of the desired release branch but at the workflow sha HEAD.
+      - name: Setup | Checkout Repository at workflow sha
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.version }}
@@ -49,13 +70,19 @@ jobs:
     name: "Docker Image"
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Project
-      uses: actions/checkout@v4
-    - name: Build Docker Image
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        push: false
+      # Note: we need to checkout the repository at the workflow sha in case during the workflow
+      # the branch was updated. To keep PSR working with the configured release branches,
+      # we force a checkout of the desired release branch but at the workflow sha HEAD.
+      - name: Setup | Checkout Repository at workflow sha
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+      - name: Build Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
 
   release:
     if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
@@ -105,7 +132,6 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' && needs.release.outputs.released == 'true' }}
     needs: [release]
     runs-on: ubuntu-latest
-    concurrency: docker_release
     strategy:
       fail-fast: false
       matrix:
@@ -118,7 +144,7 @@ jobs:
 
     steps:
       # Note: we checkout the just created tag here
-      - name: Setup | Checkout Repository at workflow sha
+      - name: Setup | Checkout Repository at tag
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -150,7 +176,7 @@ jobs:
         with:
           context: .
           platforms: ${{ matrix.platform }}
-          tags: ${{ steps.docker_meta.outputs.tags }}
+          tags: ${{ env.REGISTRY_IMAGE }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
 
@@ -172,6 +198,10 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' && needs.release.outputs.released == 'true' }}
     needs: [release, docker_release]
     runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+
     steps:
       - name: Download digests
         uses: actions/download-artifact@v4
