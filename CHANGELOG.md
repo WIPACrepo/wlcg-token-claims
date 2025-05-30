@@ -2,6 +2,13 @@
 
 
 
+## v0.0.16 (2025-05-30)
+
+###  
+
+* forgot to commit change in validator ([`d14d4ff`](https://github.com/WIPACrepo/wlcg-token-claims/commit/d14d4ff258b6a7363819503f38a3be13d667252c))
+
+
 ## v0.0.15 (2025-05-30)
 
 ###  
