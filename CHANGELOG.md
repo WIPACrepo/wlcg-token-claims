@@ -2,6 +2,13 @@
 
 
 
+## v0.0.6 (2025-05-30)
+
+###  
+
+* do better checkouts, and fix docker meta in CI ([`f216359`](https://github.com/WIPACrepo/wlcg-token-claims/commit/f2163596c0fcc5dff54dc85ff11af4855e8ca264))
+
+
 ## v0.0.5 (2025-05-30)
 
 ###  
