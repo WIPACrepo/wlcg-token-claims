@@ -2,6 +2,13 @@
 
 
 
+## v0.0.15 (2025-05-30)
+
+###  
+
+* fix /healthz route ([`29120ce`](https://github.com/WIPACrepo/wlcg-token-claims/commit/29120ce768b1212dc8acb038193cbbc374c6d237))
+
+
 ## v0.0.14 (2025-05-30)
 
 ###  
