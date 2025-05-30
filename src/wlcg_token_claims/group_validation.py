@@ -25,13 +25,13 @@ def get_stat(path: Path) -> os.stat_result:
 
 class Validator:
     def __init__(self, base_path: str):
-        self._base_path = Path(base_path if base_path else '/')
+        self.base_path = Path(base_path if base_path else '/')
 
     def __call__(self, username='', scope='') -> bool:
         if username and scope and scope.startswith('storage.') and ':' in scope:
             perm, scope_path = scope.split('.', 1)[-1].split(':', 1)
-            path = (self._base_path / scope_path.lstrip('/')).resolve()
-            if not path.is_relative_to(self._base_path):
+            path = (self.base_path / scope_path.lstrip('/')).resolve()
+            if not path.is_relative_to(self.base_path):
                 logging.debug('path is not relative to base: %s', scope_path)
                 return False
             while not path.exists():
