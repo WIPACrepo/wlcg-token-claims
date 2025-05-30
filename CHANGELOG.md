@@ -2,6 +2,13 @@
 
 
 
+## v0.0.3 (2025-05-30)
+
+###  
+
+* add more docs to readme ([`7f42e1b`](https://github.com/WIPACrepo/wlcg-token-claims/commit/7f42e1baec6f0df815c97dc65919e998a8654388))
+
+
 ## v0.0.2 (2025-05-09)
 
 ###  
