@@ -2,6 +2,13 @@
 
 
 
+## v0.0.8 (2025-05-30)
+
+###  
+
+* try being clever and adding annotations to docker manifest ([`efa4e6e`](https://github.com/WIPACrepo/wlcg-token-claims/commit/efa4e6e771736b014356f0ec748e2e8601aa0bca))
+
+
 ## v0.0.7 (2025-05-30)
 
 ###  
