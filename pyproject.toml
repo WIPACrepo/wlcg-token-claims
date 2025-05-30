@@ -28,9 +28,9 @@ dynamic = ["version"]
 tests = ["pytest", "pytest_asyncio"]
 mypy = [
     "mypy",
-    "types-cachetools"
+    "types-cachetools",
     "pytest",
-    "pytest-asyncio",
+    "pytest-asyncio"
 ]
 
 [project.urls]
