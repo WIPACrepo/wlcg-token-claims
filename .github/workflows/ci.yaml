@@ -16,14 +16,9 @@ jobs:
   flake8:
     runs-on: ubuntu-latest
     steps:
-      # Note: we need to checkout the repository at the workflow sha in case during the workflow
-      # the branch was updated. To keep PSR working with the configured release branches,
-      # we force a checkout of the desired release branch but at the workflow sha HEAD.
-      - name: Setup | Checkout Repository at workflow sha
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          ref: ${{ github.sha }}
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - uses: astral-sh/ruff-action@v3
 
   py-versions:
@@ -31,18 +26,30 @@ jobs:
     outputs:
       matrix: ${{ steps.versions.outputs.matrix }}
     steps:
-      # Note: we need to checkout the repository at the workflow sha in case during the workflow
-      # the branch was updated. To keep PSR working with the configured release branches,
-      # we force a checkout of the desired release branch but at the workflow sha HEAD.
-      - name: Setup | Checkout Repository at workflow sha
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          ref: ${{ github.sha }}
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - id: versions
         uses: WIPACrepo/wipac-dev-py-versions-action@v2.5
 
-  pip-install:
+  mypy:
+    needs: [ py-versions ]
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      fail-fast: false
+      matrix:
+        py3: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.py3 }}
+      - uses: WIPACrepo/wipac-dev-mypy-action@v2.0
+
+  tests:
     needs: [py-versions]
     runs-on: ubuntu-latest
     strategy:
@@ -51,20 +58,16 @@ jobs:
       matrix:
         version: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
     steps:
-      # Note: we need to checkout the repository at the workflow sha in case during the workflow
-      # the branch was updated. To keep PSR working with the configured release branches,
-      # we force a checkout of the desired release branch but at the workflow sha HEAD.
-      - name: Setup | Checkout Repository at workflow sha
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          ref: ${{ github.sha }}
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.version }}
       - run: |
           pip install --upgrade pip wheel setuptools
-          pip install .
+          pip install .[tests]
+          pytest -v --log-level debug --tb=short
 
   docker-build:
     name: "Docker Image"
@@ -172,10 +175,13 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Push Docker Image
+        id: build
         uses: docker/build-push-action@v6
         with:
           context: .
           platforms: ${{ matrix.platform }}
+          build-args:
+          - SETUPTOOLS_SCM_PRETEND_VERSION=${{ needs.release.outputs.tag }}
           tags: ${{ env.REGISTRY_IMAGE }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
