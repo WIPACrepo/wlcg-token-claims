@@ -89,7 +89,7 @@ jobs:
 
   release:
     if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
-    needs: [flake8, pip-install, docker-build]
+    needs: [flake8, tests, docker-build]
     runs-on: ubuntu-latest
     concurrency: release
 
