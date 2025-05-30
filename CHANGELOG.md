@@ -2,6 +2,13 @@
 
 
 
+## v0.0.12 (2025-05-30)
+
+###  
+
+* try again for annotations ([`458312c`](https://github.com/WIPACrepo/wlcg-token-claims/commit/458312c53373081db425c91f6549d16cf4036440))
+
+
 ## v0.0.11 (2025-05-30)
 
 ###  
