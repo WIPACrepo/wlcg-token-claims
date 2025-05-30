@@ -2,6 +2,13 @@
 
 
 
+## v0.0.10 (2025-05-30)
+
+###  
+
+* fix annotation ([`a065e17`](https://github.com/WIPACrepo/wlcg-token-claims/commit/a065e17cd2fe68734eb7390400b35a74568d7c88))
+
+
 ## v0.0.9 (2025-05-30)
 
 ###  
