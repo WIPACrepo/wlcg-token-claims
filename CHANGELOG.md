@@ -2,6 +2,21 @@
 
 
 
+## v0.0.7 (2025-05-30)
+
+###  
+
+* fix toml ([`e3bc3d8`](https://github.com/WIPACrepo/wlcg-token-claims/commit/e3bc3d8e3e5492dbaaf6cce9d64b933a46c2780c))
+
+* cache os.stat. clean up mypy ([`2d358f4`](https://github.com/WIPACrepo/wlcg-token-claims/commit/2d358f406f6d6218e69edcd18bf46e1bb10b4388))
+
+* fix needs ([`90f5aa6`](https://github.com/WIPACrepo/wlcg-token-claims/commit/90f5aa6a6b08acef035ebbe125b5fa3309bf97ef))
+
+* correct syntax ([`6cb0796`](https://github.com/WIPACrepo/wlcg-token-claims/commit/6cb079672a8dc906a2d3eeae5d6c09db6ba4830d))
+
+* add ci tests ([`4717a95`](https://github.com/WIPACrepo/wlcg-token-claims/commit/4717a959110f8d14120a33148528cb190a8cc90f))
+
+
 ## v0.0.6 (2025-05-30)
 
 ###  
