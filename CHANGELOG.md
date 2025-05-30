@@ -2,6 +2,13 @@
 
 
 
+## v0.0.13 (2025-05-30)
+
+###  
+
+* maybe annotations? ([`dfe8663`](https://github.com/WIPACrepo/wlcg-token-claims/commit/dfe86632f075e7a2b801d1dad4a809d54ff7e4b1))
+
+
 ## v0.0.12 (2025-05-30)
 
 ###  
