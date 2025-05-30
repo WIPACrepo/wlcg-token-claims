@@ -2,6 +2,15 @@
 
 
 
+## v0.0.4 (2025-05-30)
+
+###  
+
+* try building both amd64 and arm64 docker images ([`a857d5c`](https://github.com/WIPACrepo/wlcg-token-claims/commit/a857d5c5b570e67550cdfc1b36e1b423b542c58f))
+
+* add /mnt/data to Dockerfile ([`a17bff1`](https://github.com/WIPACrepo/wlcg-token-claims/commit/a17bff12c61dba294f16c17929f3c52053e30ce0))
+
+
 ## v0.0.3 (2025-05-30)
 
 ###  
