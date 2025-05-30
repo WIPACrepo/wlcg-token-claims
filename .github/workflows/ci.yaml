@@ -61,12 +61,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.version }}
       - run: |
           pip install --upgrade pip wheel setuptools
-          pip install .[tests]
+          pip install -e .[tests]
           pytest -v --log-level debug --tb=short
 
   docker-build:

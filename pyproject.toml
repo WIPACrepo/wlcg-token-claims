@@ -25,7 +25,13 @@ dependencies = [
 dynamic = ["version"]
 
 [project.optional-dependencies]
-tests = ["mypy", "pytest", "pytest-async", "pytest_asyncio"]
+tests = ["pytest", "pytest_asyncio"]
+mypy = [
+    "mypy",
+    "types-cachetools"
+    "pytest",
+    "pytest-asyncio",
+]
 
 [project.urls]
 repository = "https://github.com/WIPACrepo/wlcg-token-claims"

@@ -46,7 +46,7 @@ def storage(tmp_path, monkeypatch):
         return _mkuser(**users[username])
     monkeypatch.setattr(group_validation, 'get_user_info', get_user)
 
-    def fake_stat(path, *args, **kwargs):
+    def get_stat(path, *args, **kwargs):
         if Path(path).is_relative_to(tmp_path):
             rpath = str(path)[len(str(tmp_path)):]
             logging.debug(f'mocking! "{rpath}"')
@@ -68,7 +68,8 @@ def storage(tmp_path, monkeypatch):
                     return _mock_perms(1, 12353, 0o775)
             return _mock_perms(1, 1, 0o700)
         else:
-            return os_stat(path, *args, **kwargs)
+            return os_stat(str(path), *args, **kwargs)
+    monkeypatch.setattr(group_validation, 'get_stat', get_stat)
 
     data_user = tmp_path / 'data' / 'user'
     data_user.mkdir(parents=True)
@@ -105,6 +106,4 @@ def storage(tmp_path, monkeypatch):
     #chown(str(p2), -1, 12345)
     #chown(str(p), -1, 12353)
 
-    with patch('os.stat') as mock_stat:
-        mock_stat.side_effect = fake_stat
-        yield (users, groups, tmp_path)
+    yield (users, groups, tmp_path)

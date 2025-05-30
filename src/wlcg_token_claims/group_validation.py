@@ -1,7 +1,7 @@
-from grp import getgrall
+from grp import getgrall, struct_group
 import logging
 from pathlib import Path
-from pwd import getpwnam
+from pwd import getpwnam, struct_passwd
 import os
 import stat
 
@@ -9,19 +9,23 @@ import cachetools.func
 
 
 @cachetools.func.ttl_cache(ttl=60)
-def get_all_groups():
+def get_all_groups() -> list[struct_group]:
     return getgrall()
 
 
 @cachetools.func.ttl_cache(maxsize=1000, ttl=60)
-def get_user_info(username):
+def get_user_info(username) -> struct_passwd:
     return getpwnam(username)
+
+
+@cachetools.func.ttl_cache(maxsize=100000, ttl=60)
+def get_stat(path: Path) -> os.stat_result:
+    return os.stat(str(path))
 
 
 class Validator:
     def __init__(self, base_path: str):
         self._base_path = Path(base_path if base_path else '/')
-        self._path_cache = {}
 
     def __call__(self, username='', scope='') -> bool:
         if username and scope and scope.startswith('storage.') and ':' in scope:
@@ -37,7 +41,7 @@ class Validator:
             if perm in ('read', 'stage', 'create', 'modify'):
                 groups = self.get_user_groups(username)
                 logging.debug('groups: %r', groups)
-                path_stat = os.stat(str(path))
+                path_stat = get_stat(path)
                 logging.debug('stat: uid:%d gid:%d', path_stat.st_uid, path_stat.st_gid)
                 if path_stat.st_uid == get_user_info(username).pw_uid:
                     logging.debug('match username')
