@@ -1,8 +1,8 @@
 from collections import namedtuple
-from grp import getgrall, struct_group
+from grp import getgrall
 import logging
 from pathlib import Path
-from pwd import getpwnam, struct_passwd
+from pwd import getpwnam
 import os
 import stat
 
