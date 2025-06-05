@@ -38,6 +38,20 @@ docker run --name token-claims -p 8888:8888 -e PORT=8888 \
 Or run with Kubernetes or other tools.
 
 
+## Using LDAP
+
+If local accounts or PAM isn't enough, you can connect directly to LDAP
+for user and group translation (username -> uid,gids).
+
+These environment variables are available:
+
+```
+export USE_LDAP=true
+export LDAP_URL=ldaps://foo.bar
+export LDAP_USER_BASE='ou=People,dc=icecube,dc=wisc,dc=edu'
+export LDAP_GROUP_BASE='ou=Group,dc=icecube,dc=wisc,dc=edu'
+```
+
 ### Code Structure
 
 Tests are in tests/

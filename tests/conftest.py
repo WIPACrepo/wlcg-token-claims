@@ -8,16 +8,16 @@ from wlcg_token_claims import group_validation
 
 
 def _mkuser(uid, gid):
-    ret = Mock(spec=['pw_uid', 'pw_gid'])
-    ret.pw_uid = uid
-    ret.pw_gid = gid
+    ret = Mock(spec=['uid', 'gid'])
+    ret.uid = uid
+    ret.gid = gid
     return ret
 
 
 def _mkgroup(gid, members):
-    ret = Mock(spec=['gr_gid', 'gr_mem'])
-    ret.gr_gid = gid
-    ret.gr_mem = members
+    ret = Mock(spec=['gid', 'members'])
+    ret.gid = gid
+    ret.members = members
     return ret
 
 def _mock_perms(uid, gid, mode):
@@ -35,8 +35,6 @@ def storage(tmp_path, monkeypatch):
         _mkgroup(12352, ['test2']),
         _mkgroup(12353, []),
     ]
-    monkeypatch.setattr(group_validation, 'get_all_groups', MagicMock(return_value=groups))
-
     users = {
         'non': {'uid': 12300, 'gid': 12300},
         'test1': {'uid': 12345, 'gid': 12345},
@@ -44,7 +42,10 @@ def storage(tmp_path, monkeypatch):
     }
     def get_user(username):
         return _mkuser(**users[username])
-    monkeypatch.setattr(group_validation, 'get_user_info', get_user)
+    PAM = MagicMock()
+    PAM.return_value.get_all_groups = MagicMock(return_value=groups)
+    PAM.return_value.get_user_info = MagicMock(side_effect=get_user)
+    monkeypatch.setattr(group_validation, 'LookupPAM', PAM)
 
     def get_stat(path, *args, **kwargs):
         if Path(path).is_relative_to(tmp_path):

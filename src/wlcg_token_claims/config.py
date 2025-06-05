@@ -7,6 +7,7 @@ from wipac_dev_tools import from_environment_as_dataclass
 class EnvConfig:
     AUTH_SECRET: str = ''
     BASE_PATH: str = '/'
+    USE_LDAP: bool = False
 
     HOST: str = 'localhost'
     PORT: int = 8080
