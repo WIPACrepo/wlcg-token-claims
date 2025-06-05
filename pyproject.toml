@@ -20,7 +20,7 @@ classifiers = [
 requires-python = ">=3.12"
 dependencies = [
     "wipac-dev-tools",
-    "wipac-keycloak-rest-services",
+    "wipac-keycloak-rest-services>=1.4.122",
     "wipac-rest-tools",
 ]
 dynamic = ["version"]
