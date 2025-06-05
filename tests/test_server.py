@@ -31,6 +31,7 @@ async def server(monkeypatch, port, storage):
         env.PORT = int(port)
         env.DEBUG = True
         env.AUTH_SECRET = 'secret'
+        env.USE_LDAP = False
 
         s = Server()
         await s.start()

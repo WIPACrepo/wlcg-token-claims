@@ -2,38 +2,42 @@ from unittest.mock import MagicMock
 from wlcg_token_claims import group_validation
 
 
-def test_get_all_groups(monkeypatch):
-    groups = MagicMock()
+def test_get_all_groups_PAM(monkeypatch):
+    groups = [MagicMock()]
     m = MagicMock(return_value=groups)
     monkeypatch.setattr(group_validation, 'getgrall', m)
 
-    ret = group_validation.get_all_groups()
-    assert ret == groups
+    PAM = group_validation.LookupPAM()
+
+    ret = PAM.get_all_groups()
+    assert len(ret) == len(groups)
+    assert ret[0].gid == groups[0].gr_gid
     assert m.call_count == 1
 
-    ret = group_validation.get_all_groups()
-    assert ret == groups
+    ret = PAM.get_all_groups()
     assert m.call_count == 1
 
 
-def test_get_user_info(monkeypatch):
+def test_get_user_info_PAM(monkeypatch):
     user1 = MagicMock()
     m = MagicMock(return_value=user1)
     monkeypatch.setattr(group_validation, 'getpwnam', m)
 
-    ret = group_validation.get_user_info('user1')
-    assert ret == user1
+    PAM = group_validation.LookupPAM()
+
+    ret = PAM.get_user_info('user1')
+    assert ret.uid == user1.pw_uid
     assert m.call_count == 1
 
-    ret = group_validation.get_user_info('user1')
-    assert ret == user1
+    ret = PAM.get_user_info('user1')
+    assert ret.uid == user1.pw_uid
     assert m.call_count == 1
 
     user2 = MagicMock()
     m.return_value = user2
 
-    ret = group_validation.get_user_info('user2')
-    assert ret == user2
+    ret = PAM.get_user_info('user2')
+    assert ret.uid == user2.pw_uid
     assert m.call_count == 2
 
 def test_validator(storage):

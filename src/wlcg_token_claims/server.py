@@ -100,7 +100,7 @@ class Server:
         }
         kwargs = RestHandlerSetup(handler_config)
         kwargs['route_stats'] = None  # disable route stats for more speed
-        kwargs['validate'] = Validator(ENV.BASE_PATH)
+        kwargs['validate'] = Validator(base_path=ENV.BASE_PATH, use_ldap=ENV.USE_LDAP)
 
         server = RestServer(
             debug=ENV.DEBUG,
