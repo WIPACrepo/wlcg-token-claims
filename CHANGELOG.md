@@ -2,6 +2,13 @@
 
 
 
+## v0.1.1 (2025-06-05)
+
+###  
+
+* bump krs version ([`fbb7aeb`](https://github.com/WIPACrepo/wlcg-token-claims/commit/fbb7aeb6ae806568d6e21c2aede55afe4894d4be))
+
+
 ## v0.1.0 (2025-06-05)
 
 ### [minor]
