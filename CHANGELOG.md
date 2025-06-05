@@ -2,6 +2,17 @@
 
 
 
+## v0.1.0 (2025-06-05)
+
+### [minor]
+
+* [minor] use ldap directly for user/group info (#1)
+
+* use ldap directly for user/group info
+
+* fix ruff ([`4c7e609`](https://github.com/WIPACrepo/wlcg-token-claims/commit/4c7e6093fa9a12d71a7793ee7558043198c28de0))
+
+
 ## v0.0.16 (2025-05-30)
 
 ###  
